@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "nrf_gpio.h": "c",
+        "sensor.h": "c"
+    }
+}
