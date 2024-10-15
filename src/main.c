@@ -28,19 +28,15 @@ static const char *now_str(void)
 
 void main(void)
 {
+	// The macro DT_LABEL is deprecated.
 	// const char *const label = DT_LABEL(DT_INST(0, aosong_dht));
-	// const struct device *dht22 = device_get_binding("DHT22");
+	// const struct device *dht22 = device_get_binding(label);
 
-        const struct device *dht22 = device_get_binding(DT_PROP(DHT22_NODE, label));
-        if (!dht22) {
-                printk("Could not get binding for DHT device\n");
-                return;
-        }
-
-	// if (!dht22) {
-	// 	printk("Failed to find sensor %s\n", label);
-	// 	return;
-	// }
+	const struct device *dht22 = device_get_binding(DT_PROP(DHT22_NODE, label));
+	if (!dht22) {
+			printk("Could not get binding for DHT device\n");
+			return;
+	}
 
 	while (true) {
 		int rc = sensor_sample_fetch(dht22);
@@ -63,7 +59,6 @@ void main(void)
 			printk("get failed: %d\n", rc);
 			continue;
 		}
-		// printk("temperature.value1 = %d, temperature.value2 = %d\n",temperature.val1, temperature.val2);
 
 		printk("[%s]: %.1f Cel ; %.1f %%RH\n",
 		       now_str(),
